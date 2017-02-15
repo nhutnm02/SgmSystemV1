@@ -1,0 +1,26 @@
+﻿<ul class="nav navbar-top-links navbar-right">
+    <li>@Html.ActionLink("Hello " + TempData["Admin"] + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+    <li>@Html.ActionLink("LogOut", "LogOut", "Account")</li>
+    
+    <!-- /.dropdown -->
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-user">
+            <li>
+                <a href="@Url.Action("WaitForUpdate","Home")"><i class="fa fa-user fa-fw"></i> Thông Tin Cá Nhân</a>
+            </li>
+            <li>
+                <a href="@Url.Action("WaitForUpdate","Home")"><i class="fa fa-gear fa-fw"></i> Đổi Mật Khẩu</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="@Url.Action("LogOut","Account", new {area = "Admin" })"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+            </li>
+        </ul>
+        <!-- /.dropdown-user -->
+    </li>
+    <!-- /.dropdown -->
+</ul>
+

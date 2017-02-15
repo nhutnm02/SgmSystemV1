@@ -1,0 +1,104 @@
+﻿@using Model.ViewModel
+@model HomeViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+@section Header{
+        Index
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-3">
+
+            </div>
+            <div class="col-lg-6">
+              
+                  @*<a href="@Url.Action("AtCheckIn","Attandance")" class="btn btn-primary btn-lg btn-block">CHECK-IN</a>*@
+                 @if (Model.IsHideButtonByComName)
+                 {
+                   using (Html.BeginForm("AtCheckIn", "Attandance", FormMethod.Post))
+                   {
+
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">CHECK-IN</button>
+                   }
+                 }
+                 else
+                 {
+                    <h4>@System.Environment.MachineName - Xin lỗi, bạn không thể check-in</h4>
+                 }
+
+
+            </div>
+            <div class="col-lg-3">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Thông Báo Công Tác
+    </div>
+    <div class="panel-body" style="overflow:auto;">
+        <div class="dataTable_wrapper">
+            <table class="table table-striped table-bordered table-hover" id="example">
+                <thead>
+                    <tr>
+                        <th>
+                            Họ Và Tên
+                        </th>
+                        <th>
+                            Mã Tour / Mô Tả
+                        </th>
+                        <th>
+                            Từ Ngày
+                        </th>
+                        <th>
+                            Đến Ngày
+                        </th>
+                        <th>
+                            Loại Công
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListUserForHome)
+                    {
+                        <tr class="@item.Color">
+                            <td>
+                                @Html.DisplayFor(modelItem=>item.UserFullName)<br/>
+                                @Html.DisplayFor(modelItem=>item.UserPhone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UeNote)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UeDateExpires)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UeWillExpires)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem=>item.Loai)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/scriptTable")
+    <script src="~/Content/client/js/Controller/forTable.js"></script>
+}
+
+
+
+
+
+
+

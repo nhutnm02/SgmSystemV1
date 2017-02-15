@@ -1,0 +1,140 @@
+﻿@using Model.ViewModel
+@model AttandanceViewModel
+@{
+    ViewBag.Title = "AtIndex";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+@section Header{
+        Chấm Công
+}
+
+<div class="row">
+    <div class="col-lg-12">
+      
+
+        @*<form role="form">
+            <div class="form-group">
+                <label>Tháng</label>
+                <select class="form-control">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+        </form>
+       <div class="dropdown">
+           <button class="btn btn-default dropdown-toggle " type="button" data-toggle="dropdown">Tháng
+           <span class="caret"></span></button>
+           <ul class="dropdown-menu">
+               <li><a href="#">Tháng 1</a></li>
+               <li><a href="#">Tháng 3</a></li>
+           </ul>
+       </div>*@
+
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="well">
+                    <h2>@Model.ClientName
+                        <small>@Model.CurrentMonth</small>
+                    </h2>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-meh-o fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">@Model.CongDung</div>
+                                            <div>Công Đúng</div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-green">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-smile-o fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">@Model.CongThem</div>
+                                            <div>Công Thêm</div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-yellow">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-smile-o fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">@Model.CongPhep</div>
+                                            <div>Công Phép</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-red">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-frown-o fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">@Model.CongTre</div>
+                                            <div>Công Trễ</div>
+                                        </div>
+                                    </div>
+                                </div>                           
+                            </div>
+                        </div>
+                    </div>
+                    @*<a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View DataTables Documentation</a>*@
+                </div>
+                <div class="dataTable_wrapper">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>Thứ</th>
+                                <th>Ngày Check-In</th>
+                                <th>Giờ Check-In</th>
+                                <th>Tình Trạng</th>                               
+                                <th>Ghi Chú</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ListAttan)
+                            {
+                                <tr class="@item.Color">
+                                    <td>@item.Day</td>
+                                    <td>@item.CheckIn</td>
+                                    <td>@item.TimeCheckIn</td>
+                                    <td class="center">@item.Status</td>
+                                    <td class="center"></td>
+                                </tr>
+                            }
+                                     
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+             
+            </div>          
+        </div>
+    </div>
+</div>
+
