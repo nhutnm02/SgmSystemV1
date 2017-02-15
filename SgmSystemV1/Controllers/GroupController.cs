@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,8 +12,8 @@ namespace SgmSystemV1.Controllers
         // GET: Group
         public ActionResult Index()
         {
-            
-            return View();
+            GroupDAL groupDAL = new GroupDAL();
+            return View("Index");
         }
 
         // GET: Group/Details/5
