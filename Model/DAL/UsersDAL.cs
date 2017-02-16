@@ -30,7 +30,7 @@ namespace Model.DAL
             {
                 UsersListViewModel model = new UsersListViewModel();
                 model.UserID = item.UserID;
-                model.GroupName = groupDAL.GetGroupByID(item.GroupID).GroupName;
+                model.GroupName = groupDAL.GetGroupByID(item.GroupID.Value).GroupName;
                 model.UserName = item.UserName;
                 model.UserFullName = item.UserFullName;
                 model.UserDOB = item.UserDOB.Value;
@@ -122,18 +122,18 @@ namespace Model.DAL
             model.UserComputer = listUser.UserComputer;
             model.UserDOB = listUser.UserDOB;
             model.UserEmail = listUser.UserEmail;
-            model.GroupID = listUser.GroupID;
+            model.GroupID = listUser.GroupID.Value;
             model.UserExtention = listUser.UserExtention;
             model.UserJoinDate = listUser.UserJoinDate;
             model.UserPhone = listUser.UserPhone;
             model.UserStatus = listUser.UserStatus;
-            model.DdlGroupID = groupDAL.DdlGroup(listUser.GroupID);           
+            model.DdlGroupID = groupDAL.DdlGroup(listUser.GroupID.Value);           
             return model;
         }
 
         public bool Login(UserLoginViewModel userVM)
         {
-            var result = db.tbl_Users.Count(x => x.UserName == userVM.UserName && x.UserPass == userVM.Password && x.UserStatus == true);
+            var result = db.tbl_Users.Count(m=>m.UserName == userVM.UserName && m.UserPass == userVM.Password && m.UserStatus == true);
             if(result > 0)
             {
                 return true;
@@ -143,6 +143,10 @@ namespace Model.DAL
                 return false;
             }
         }
+
+
+
+
 
 
 

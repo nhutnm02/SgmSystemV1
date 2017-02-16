@@ -170,6 +170,8 @@ namespace Model.ViewModel
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public string UserComName { get; set; }
+
+        public bool UserStatus { get; set; }
         public string Message { get; set; }
     }
 }

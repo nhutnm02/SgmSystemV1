@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.DAL;
+using Model.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,23 @@ namespace Model.DAL.Tests
             var result = userDal.GetListForClient();
             //Assert
             Assert.IsNotNull(result);
+        }
+        [TestMethod()]
+        public void TestLogin()
+        {
+            //arrange
+            UserLoginViewModel model = new UserLoginViewModel();
+            model.UserName = "nhutnm";
+            model.Password = "123123";
+            model.UserStatus = true;
+            var userDAL = new UsersDAL();
+
+            //act
+            var result = userDAL.Login(model);
+
+            //assert
+            Assert.AreEqual(true, result);
+
         }
     }
 }

@@ -6,6 +6,7 @@ namespace Model.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    [Table("db_owner.tbl_Attandance")]
     public partial class tbl_Attandance
     {
         [Key]
@@ -15,6 +16,7 @@ namespace Model.EF
 
         public int? AtInOrOut { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? AtDateCheckIn { get; set; }
 
         public int? AtMonth { get; set; }

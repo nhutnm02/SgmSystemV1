@@ -90,7 +90,6 @@
     <Compile Include="DAL\HomeDAL.cs" />
     <Compile Include="DAL\UserEventDAL.cs" />
     <Compile Include="DAL\UsersDAL.cs" />
-    <Compile Include="EF\proc_as_UserCheckIn_Result.cs" />
     <Compile Include="EF\SgmSystemDbContext.cs" />
     <Compile Include="EF\tbl_Admin.cs" />
     <Compile Include="EF\tbl_Attandance.cs" />
@@ -113,6 +112,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="connectionStrings.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
