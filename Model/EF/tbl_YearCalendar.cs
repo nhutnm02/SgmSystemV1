@@ -6,7 +6,6 @@ namespace Model.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("db_owner.tbl_YearCalendar")]
     public partial class tbl_YearCalendar
     {
         [Key]

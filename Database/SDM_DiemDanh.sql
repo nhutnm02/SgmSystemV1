@@ -2,13 +2,13 @@
 USE master
 GO
 --
-IF EXISTS (select name from sys.databases where name = 'PDuLich') DROP DATABASE PDuLich
+IF EXISTS (select name from sys.databases where name = 'SGM') DROP DATABASE SGM
 --
 GO
-CREATE DATABASE PDuLich
+CREATE DATABASE SGM
 --
 GO
-USE PDuLich
+USE SGM
 go
 create table tbl_Admin(
 	AdminID int primary key identity(1,1),

@@ -23,17 +23,15 @@ namespace SgmSystemV1
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
-            bundles.Add(new ScriptBundle("~/Content/SbCss").Include(
-                    "~/Content/bootstrap.min.css",
+            bundles.Add(new StyleBundle("~/bundles/css").Include(
+                     "~/Content/bootstrap.min.css",
                     "~/Content/metisMenu.min.css",
                     "~/Content/admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css",
                     "~/Content/admin/bower_components/datatables-responsive/css/dataTables.responsive.css",
                     "~/Content/sb-admin-2.css",
                     "~/Content/font-awesome.min.css"
                 ));
+           
             bundles.Add(new ScriptBundle("~/bundles/scriptTable").Include(
                     "~/Content/admin/bower_components/datatables/media/js/jquery.dataTables.min.js",
                     "~/Content/admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"

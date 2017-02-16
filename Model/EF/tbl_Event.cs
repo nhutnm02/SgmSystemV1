@@ -6,7 +6,6 @@ namespace Model.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("db_owner.tbl_Event")]
     public partial class tbl_Event
     {
         [Key]

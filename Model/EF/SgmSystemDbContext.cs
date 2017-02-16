@@ -24,8 +24,8 @@ namespace Model.EF
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            Database.SetInitializer<SgmSystemDbContext>(null);
 
+            Database.SetInitializer<SgmSystemDbContext>(null);
             modelBuilder.Entity<tbl_Admin>()
                 .Property(e => e.AdminName)
                 .IsUnicode(false);
@@ -44,14 +44,6 @@ namespace Model.EF
 
             modelBuilder.Entity<tbl_Users>()
                 .Property(e => e.UserPass)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<tbl_Users>()
-                .Property(e => e.UserPhone)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<tbl_Users>()
-                .Property(e => e.UserExtention)
                 .IsUnicode(false);
 
             modelBuilder.Entity<tbl_Users>()

@@ -30,7 +30,7 @@ namespace Model.DAL
             {
                 UsersListViewModel model = new UsersListViewModel();
                 model.UserID = item.UserID;
-                model.GroupName = groupDAL.GetGroupByID(item.GroupID.Value).GroupName;
+                model.GroupName = groupDAL.GetGroupByID(item.GroupID).GroupName;
                 model.UserName = item.UserName;
                 model.UserFullName = item.UserFullName;
                 model.UserDOB = item.UserDOB.Value;
@@ -122,12 +122,12 @@ namespace Model.DAL
             model.UserComputer = listUser.UserComputer;
             model.UserDOB = listUser.UserDOB;
             model.UserEmail = listUser.UserEmail;
-            model.GroupID = listUser.GroupID.Value;
+            model.GroupID = listUser.GroupID;
             model.UserExtention = listUser.UserExtention;
             model.UserJoinDate = listUser.UserJoinDate;
             model.UserPhone = listUser.UserPhone;
             model.UserStatus = listUser.UserStatus;
-            model.DdlGroupID = groupDAL.DdlGroup(listUser.GroupID.Value);           
+            model.DdlGroupID = groupDAL.DdlGroup(listUser.GroupID);           
             return model;
         }
 

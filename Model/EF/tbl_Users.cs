@@ -6,7 +6,6 @@ namespace Model.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("db_owner.tbl_Users")]
     public partial class tbl_Users
     {
         [Key]
@@ -35,7 +34,6 @@ namespace Model.EF
         [StringLength(50)]
         public string UserEmail { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? UserDOB { get; set; }
 
         public DateTime? UserCreateDate { get; set; }
@@ -45,9 +43,8 @@ namespace Model.EF
 
         public bool? UserStatus { get; set; }
 
-        public int? GroupID { get; set; }
+        public int GroupID { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? UserJoinDate { get; set; }
     }
 }
