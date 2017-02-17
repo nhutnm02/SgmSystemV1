@@ -1,5 +1,5 @@
 ﻿<ul class="nav navbar-top-links navbar-right">
-    <li>@Html.ActionLink("Hello " + TempData["Admin"] + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+    <li>@Html.ActionLink("Hello " + User.Identity.Name + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
     <li>@Html.ActionLink("LogOut", "LogOut", "Account")</li>
     
     <!-- /.dropdown -->

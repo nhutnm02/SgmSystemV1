@@ -77,6 +77,8 @@ namespace Model.DAL
                 tbl_Users.UserJoinDate = userModel.UserJoinDate;
                 tbl_Users.UserStatus = userModel.UserStatus;
                 tbl_Users.UserComputer = userModel.UserComputer;
+                tbl_Users.UserAddress = userModel.UserAddress;
+
 
                 db.tbl_Users.Add(tbl_Users);
                 var result = db.SaveChanges();
@@ -102,7 +104,7 @@ namespace Model.DAL
             model.UserComputer = userEditViewModel.UserComputer;
             model.UserExtention = userEditViewModel.UserExtention;
             model.UserStatus = userEditViewModel.UserStatus;
-
+            model.UserAddress = userEditViewModel.UserAddress;
             db.Entry(model).State = EntityState.Modified;
             return db.SaveChanges();
         }
@@ -127,7 +129,8 @@ namespace Model.DAL
             model.UserJoinDate = listUser.UserJoinDate;
             model.UserPhone = listUser.UserPhone;
             model.UserStatus = listUser.UserStatus;
-            model.DdlGroupID = groupDAL.DdlGroup(listUser.GroupID);           
+            model.DdlGroupID = groupDAL.DdlGroup(listUser.GroupID);
+            model.UserAddress = listUser.UserAddress;           
             return model;
         }
 

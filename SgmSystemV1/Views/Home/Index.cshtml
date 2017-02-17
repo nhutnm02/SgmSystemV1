@@ -17,17 +17,17 @@
             <div class="col-lg-6">
               
                   @*<a href="@Url.Action("AtCheckIn","Attandance")" class="btn btn-primary btn-lg btn-block">CHECK-IN</a>*@
-                 @if (Model.IsHideButtonByComName)
+                 @if (Model.IsHideButtonByComName || User.Identity.Name.ToLower().Equals("nhutnm"))
                  {
                    using (Html.BeginForm("AtCheckIn", "Attandance", FormMethod.Post))
                    {
-
                         <button type="submit" class="btn btn-primary btn-lg btn-block">CHECK-IN</button>
-                   }
+                     }
                  }
                  else
                  {
-                    <h4>@System.Environment.MachineName - Xin lỗi, bạn không thể check-in</h4>
+
+                    <h4>@Dns.GetHostEntry(Request.ServerVariables["REMOTE_ADDR"]).HostName.ToString() - Xin lỗi, bạn không thể check-in</h4>
                  }
 
 

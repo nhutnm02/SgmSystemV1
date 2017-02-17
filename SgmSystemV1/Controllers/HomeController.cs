@@ -6,6 +6,7 @@ using SgmSystemV1.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -23,7 +24,7 @@ namespace SgmSystemV1.Controllers
         {
             UserEventDAL userDao = new UserEventDAL();
             var userCom = Session[CommonConstants.USER_COM] == null ? "no" : Session[CommonConstants.USER_COM].ToString();
-            var systemCom = System.Environment.MachineName;
+            var systemCom = Dns.GetHostEntry(Request.ServerVariables["REMOTE_ADDR"]).HostName.ToString();
 
             bool resultCom = homeDao.CheckUserCom(userCom, systemCom);
             bool resultCheckedIn = Session[CommonConstants.CHECKED] == null ? true : false;
