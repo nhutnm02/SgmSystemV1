@@ -244,3 +244,5 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /SgmSystemV1/connectionStrings.config
+/Model/connectionStrings.config
+/ModelTests/connectionStrings.config
