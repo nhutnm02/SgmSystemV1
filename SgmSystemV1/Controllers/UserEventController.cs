@@ -20,12 +20,16 @@ namespace SgmSystemV1.Controllers
         // GET: UserEvent
         public ActionResult Index()
         {
-            return View("Index", ueDAL.UeListAllByUser(1, CommonConstants.USERID));
+            UsersDAL userDAL = new UsersDAL();
+            var modelUser = userDAL.GetUser(User.Identity.Name);
+            return View("Index", ueDAL.UeListAllByUser(1, modelUser.UserID));
         }
 
         public ActionResult IndexPhep()
         {
-            return View("IndexPhep", ueDAL.UeListAllByUser(2, CommonConstants.USERID));
+            UsersDAL userDAL = new UsersDAL();
+            var modelUser = userDAL.GetUser(User.Identity.Name);
+            return View("IndexPhep", ueDAL.UeListAllByUser(2, modelUser.UserID));
         }
 
         // GET: UserEvent/Details/5
@@ -54,7 +58,10 @@ namespace SgmSystemV1.Controllers
                     return View(createModel);
                 }
 
-                createModel.UserID = CommonConstants.USERID;
+                UsersDAL userDAL = new UsersDAL();
+                var modelUser = userDAL.GetUser(User.Identity.Name);
+
+                createModel.UserID = modelUser.UserID;
                 createModel.UeType = 1;
                 createModel.EventID = 1;
                 var result = ueDAL.CreateUserEvent(createModel);
@@ -100,8 +107,10 @@ namespace SgmSystemV1.Controllers
                     return View(createPhepModel);
                 }
 
+                UsersDAL userDAL = new UsersDAL();
+                var modelUser = userDAL.GetUser(User.Identity.Name);
 
-                createPhepModel.UserID = CommonConstants.USERID;
+                createPhepModel.UserID = modelUser.UserID;
                 createPhepModel.UeType = 2;
                 createPhepModel.EventID = 1;
                 var result = ueDAL.CreateUserEvent(createPhepModel);
@@ -173,9 +182,11 @@ namespace SgmSystemV1.Controllers
                     return View();
                 }
 
+                UsersDAL userDAL = new UsersDAL();
+                var modelUser = userDAL.GetUser(User.Identity.Name);
                 ueDAL.DeleteUserEventAndAttandanceById(id);
 
-                return RedirectToAction("Index","UserEvent");
+                return RedirectToAction("Index","UserEvent", ueDAL.UeListAllByUser(1, modelUser.UserID));
             }
             catch
             {
@@ -192,10 +203,12 @@ namespace SgmSystemV1.Controllers
                 {
                     return View();
                 }
+                UsersDAL userDAL = new UsersDAL();
+                var modelUser = userDAL.GetUser(User.Identity.Name);
 
                 ueDAL.DeleteUserEventAndAttandanceById(id);
 
-                return RedirectToAction("IndexPhep", ueDAL.UeListAllByUser(2, CommonConstants.USERID));
+                return RedirectToAction("IndexPhep", ueDAL.UeListAllByUser(2, modelUser.UserID));
             }
             catch
             {

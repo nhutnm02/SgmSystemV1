@@ -45,7 +45,6 @@ namespace SgmSystemV1.Controllers
                     Session.Add(CommonConstants.USER_NAME, user.UserName);
                     Session.Add(CommonConstants.USER_ID, user.UserID);
                     Session.Add(CommonConstants.USER_COM, user.UserComputer);
-                    CommonConstants.USERID = user.UserID;
 
                    TempData["com"] = CommonConstants.USERID;
 
