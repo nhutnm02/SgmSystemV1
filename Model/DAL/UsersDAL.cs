@@ -43,7 +43,6 @@ namespace Model.DAL
                 model.UserStatus = item.UserStatus == true;
                 model.Color = item.UserStatus == true ? "default" : "danger";
                 model.UserAddress = item.UserAddress;
-
                 liUser.Add(model);
             }
 
@@ -105,6 +104,7 @@ namespace Model.DAL
             model.UserExtention = userEditViewModel.UserExtention;
             model.UserStatus = userEditViewModel.UserStatus;
             model.UserAddress = userEditViewModel.UserAddress;
+            model.GroupID = userEditViewModel.GroupID;
             db.Entry(model).State = EntityState.Modified;
             return db.SaveChanges();
         }

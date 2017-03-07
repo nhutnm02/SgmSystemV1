@@ -20,7 +20,9 @@ namespace SgmSystemV1.Areas.Admin.Controllers
         [Authorize]
         // GET: Admin/Users
         public ActionResult Index()
-        {               
+        {   
+            
+                        
             return View("Index",userDAL.GetListForClient());
         }
 
@@ -62,6 +64,7 @@ namespace SgmSystemV1.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
+
             return View("Edit", userDAL.SelectUserByID(id));
         }
 

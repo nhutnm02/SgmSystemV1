@@ -139,6 +139,7 @@ namespace Model.DAL
             try
             {
                 
+
                 var kq = db.Database.ExecuteSqlCommand("exec proc_as_UserCheckIn @UserID, @UserNote, @UserEvent, @Result OUT",
                     new SqlParameter("@UserID", UserID),
                     new SqlParameter("@UserNote",GetDayOfWeek(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day)),
