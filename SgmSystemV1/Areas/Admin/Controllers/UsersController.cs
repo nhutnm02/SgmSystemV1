@@ -74,6 +74,7 @@ namespace SgmSystemV1.Areas.Admin.Controllers
             try
             {
                 var model = userDAL.SelectUserByID(userEditViewModel.UserID);
+                userEditViewModel.UserPass = model.UserPass;
                 if(model == null)
                 {
                     return HttpNotFound();
@@ -91,9 +92,10 @@ namespace SgmSystemV1.Areas.Admin.Controllers
 
                 return RedirectToAction("Index", "Users", new { area = "Admin" });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
+                string mes = ex.Message;
                 return View(userEditViewModel);
             }
           

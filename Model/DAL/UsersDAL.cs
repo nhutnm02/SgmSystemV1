@@ -94,6 +94,7 @@ namespace Model.DAL
         public long EditUsers(UserEditViewModel userEditViewModel)
         {
             var model = db.tbl_Users.Find(userEditViewModel.UserID);
+            model.UserID = userEditViewModel.UserID;
             model.UserFullName = userEditViewModel.UserFullName;
             model.UserName = userEditViewModel.UserName;
             model.UserPass = userEditViewModel.UserPass;

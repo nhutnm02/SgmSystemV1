@@ -255,6 +255,7 @@ begin
 	declare @CongPhep int
 	set @CongThem = 2
 	set @CongPhep = 3
+	begin tran
 		if(@UeType = 2)
 			begin
 				update tbl_Attandance set AtInOrOut = @CongPhep where UeID = @UeID and UserID = @UserID and AtNote not like N'Chủ Nhật' or AtNote not like N'Thứ Bảy'
@@ -264,20 +265,13 @@ begin
 			begin
 				update tbl_Attandance set AtInOrOut = @CongThem where UeID = @UeID and UserID = @UserID and AtNote like N'Chủ Nhật' or AtNote like N'Thứ Bảy'
 				update tbl_Attandance set AtInOrOut = 1 where UeID = @UeID and UserID = @UserID and AtNote not like N'Chủ Nhật' and AtNote not like N'Thứ Bảy'
-
 			end
 		update tbl_UserEvent set UeOk = 1 where UeID = @UeID and UserID = @UserID
+	commit tran
 	set @Err = @@ERROR
 	return @Err
 
 end
 go
-create proc proc_as_AdminEditUser
-(
-	
 
-)
-as
-begin
-end
 
