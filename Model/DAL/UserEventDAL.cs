@@ -64,12 +64,27 @@ namespace Model.DAL
 
         public long AcceptEvent(UserEventAdminListViewModel userEventModel)
         {
-            var result = db.Database.ExecuteSqlCommand("exec proc_as_AcceptUpdateAttanceDanceForUser @UserID, @UeType, @UeID", 
-                new SqlParameter("@UserID",userEventModel.UserID),
-                new SqlParameter("@UeType",userEventModel.UeCount),
-                new SqlParameter("@UeID",userEventModel.UeID));
+            var result = 0;
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    result = db.Database.ExecuteSqlCommand("exec proc_as_AcceptUpdateAttanceDanceForUser @UserID, @UeType, @UeID",
+                   new SqlParameter("@UserID", userEventModel.UserID),
+                   new SqlParameter("@UeType", userEventModel.UeCount),
+                   new SqlParameter("@UeID", userEventModel.UeID));
+                    scope.Complete();
+                }
 
+               
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
             return result;
+
         }
 
         public IEnumerable<UserEventListHomeViewModel> UeListAllHome()
@@ -131,32 +146,45 @@ namespace Model.DAL
             var result = CheckFromDateToDate(createModel.UeDateExpires.Value, createModel.UeWillExpires.Value, createModel.UserID.Value);
             if (result == 1)
             {
-                using (TransactionScope scope = new TransactionScope())
+                try
+                {
+                        var model = new tbl_UserEvent();
+                        model.EventID = createModel.EventID;
+                        model.UserID = createModel.UserID;
+                        model.UeCount = createModel.UeType; //Phep hay Cong tac
+                        model.UeOk = false;
+                        model.UeCreateDate = DateTime.Now;
+                        model.UeDateExpires = createModel.UeDateExpires;
+                        model.UeNote = createModel.UeNote;
+                        model.UeWillExpires = createModel.UeWillExpires;
+                        model.UeCount = createModel.UeType;
+
+                        db.tbl_UserEvent.Add(model);
+                        db.SaveChanges();
+
+                        int UeId = model.UeID;
+
+                    if (UeId > 0) {
+                        try
+                        {
+                            AttandanceDAL modelAtt = new AttandanceDAL();
+                            createModel.UeID = model.UeID;
+                            var kq = modelAtt.CheckCongThem(createModel);
+                        }catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                       
+                    }
+
+                   
+                }
+                catch (Exception ex)
                 {
 
-                    var model = new tbl_UserEvent();
-                    model.EventID = createModel.EventID;
-                    model.UserID = createModel.UserID;
-                    model.UeCount = createModel.UeType; //Phep hay Cong tac
-                    model.UeOk = false;
-                    model.UeCreateDate = DateTime.Now;
-                    model.UeDateExpires = createModel.UeDateExpires;
-                    model.UeNote = createModel.UeNote;
-                    model.UeWillExpires = createModel.UeWillExpires;
-                    model.UeCount = createModel.UeType;
-
-                    db.tbl_UserEvent.Add(model);
-                    db.SaveChanges();
-
-                    int UeId = model.UeID;
-
-                    AttandanceDAL modelAtt = new AttandanceDAL();
-                    createModel.UeID = model.UeID;
-                    var kq = modelAtt.CheckCongThem(createModel);
-
-                    scope.Complete();
-                    return result;
+                    throw ex;
                 }
+               
             }
             return result;
         }

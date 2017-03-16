@@ -22,9 +22,10 @@ namespace SgmSystemV1.Controllers
         // GET: Attandance
         public ActionResult AtIndex()
         {
-
+            UsersDAL userDAL = new UsersDAL();
+            var modelUser = userDAL.GetUser(User.Identity.Name);
             //return View("AtIndex",atDAL.ListAllOfUser(int.Parse(Session["UserID"].ToString())));
-            return View("AtIndex",atDAL.ListAllOfUser(int.Parse(Session[CommonConstants.USER_ID].ToString())));
+            return View("AtIndex",atDAL.ListAllOfUser(modelUser.UserID));
         }
 
         [HttpPost]
@@ -32,8 +33,9 @@ namespace SgmSystemV1.Controllers
         {
 
             var attanceDao = new AttandanceDAL();
-            int userID = int.Parse(Session[CommonConstants.USER_ID].ToString());
-
+            UsersDAL userDAL = new UsersDAL();
+            var modelUser = userDAL.GetUser(User.Identity.Name);
+            int userID = modelUser.UserID;
             var resultAttan = attanceDao.CheckIn(userID);
 
             if (resultAttan == 1)

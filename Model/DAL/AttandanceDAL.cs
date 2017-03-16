@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using System.Transactions;
 
 namespace Model.DAL
 {
@@ -138,14 +139,18 @@ namespace Model.DAL
             result.SqlDbType = System.Data.SqlDbType.Int;
             try
             {
-                
 
-                var kq = db.Database.ExecuteSqlCommand("exec proc_as_UserCheckIn @UserID, @UserNote, @UserEvent, @Result OUT",
-                    new SqlParameter("@UserID", UserID),
-                    new SqlParameter("@UserNote",GetDayOfWeek(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day)),
-                    new SqlParameter("@UserEvent", 1) ,
-                    result
-                    );
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    var kq = db.Database.ExecuteSqlCommand("exec proc_as_UserCheckIn @UserID, @UserNote, @UserEvent, @Result OUT",
+                        new SqlParameter("@UserID", UserID),
+                        new SqlParameter("@UserNote", GetDayOfWeek(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)),
+                        new SqlParameter("@UserEvent", 1),
+                        result
+                        );
+                    scope.Complete();
+
+                }
             }
             catch (Exception ex)
             {
@@ -163,35 +168,49 @@ namespace Model.DAL
             var fromDate = modelEvent.UeDateExpires.Value;
             var toDate = modelEvent.UeWillExpires.Value;
             int i = 0;
-            while (fromDate.Date.AddDays(i) <= toDate.Date)
+            try
             {
-                var modelAtt = new tbl_Attandance();
-                modelAtt.UserID = modelEvent.UserID;
-                modelAtt.AtDateCheckIn = fromDate.Date.AddDays(i);
-                modelAtt.AtInOrOut = (int)Enums.LoaiCong.ChoDuyet;
-                modelAtt.AtMonth = fromDate.Date.AddDays(i).Month;
-                modelAtt.AtDay = fromDate.Date.AddDays(i).Day;
-                modelAtt.AtYear = fromDate.Date.AddDays(i).Year;
-                modelAtt.AtTime = DateTime.Now;
-                modelAtt.AtNote = GetDayOfWeek(fromDate.Date.AddDays(i).Year, fromDate.Date.AddDays(i).Month, fromDate.Date.AddDays(i).Day);
-                modelAtt.UeID = modelEvent.UeID;
-
-                List<tbl_Attandance> liAtt = CheckDateUnique(fromDate.Date.AddDays(i), modelEvent.UserID.Value);
-
-                if (liAtt.Count() < 1)
+                while (fromDate.Date.AddDays(i) <= toDate.Date)
                 {
-                    db.tbl_Attandance.Add(modelAtt);
-                    result = db.SaveChanges();
+                    var modelAtt = new tbl_Attandance();
+                    modelAtt.UserID = modelEvent.UserID;
+                    modelAtt.AtDateCheckIn = fromDate.Date.AddDays(i);
+                    modelAtt.AtInOrOut = (int)Enums.LoaiCong.ChoDuyet;
+                    modelAtt.AtMonth = fromDate.Date.AddDays(i).Month;
+                    modelAtt.AtDay = fromDate.Date.AddDays(i).Day;
+                    modelAtt.AtYear = fromDate.Date.AddDays(i).Year;
+                    modelAtt.AtTime = DateTime.Now;
+                    modelAtt.AtNote = GetDayOfWeek(fromDate.Date.AddDays(i).Year, fromDate.Date.AddDays(i).Month, fromDate.Date.AddDays(i).Day);
+                    modelAtt.UeID = modelEvent.UeID;
+
+                    List<tbl_Attandance> liAtt = CheckDateUnique(fromDate.Date.AddDays(i), modelEvent.UserID.Value);
+
+                    if (liAtt.Count() < 1)
+                    {
+                        db.tbl_Attandance.Add(modelAtt);
+                        result = db.SaveChanges();
+                        
+                    }
+                    else
+                    {
+                        using (TransactionScope scope = new TransactionScope())
+                        {
+                            result = db.Database.ExecuteSqlCommand("exec proc_as_UpdateAttandaceWithEvent @AtID,@AtInOrOut,@UeID",
+                                new SqlParameter("@AtID", liAtt[0].AtID),
+                                new SqlParameter("@AtInOrOut", (int)Enums.LoaiCong.ChoDuyet),
+                                new SqlParameter("@UeID", modelEvent.UeID));
+                            scope.Complete();
+                        }
+                    }
+                    i++;
                 }
-                else
-                {
-                    result = db.Database.ExecuteSqlCommand("exec proc_as_UpdateAttandaceWithEvent @AtID,@AtInOrOut,@UeID",
-                        new SqlParameter("@AtID",liAtt[0].AtID),
-                        new SqlParameter("@AtInOrOut", (int)Enums.LoaiCong.ChoDuyet),
-                        new SqlParameter("@UeID",modelEvent.UeID));
-                }               
-                i++;
             }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
 
             return result;
         }

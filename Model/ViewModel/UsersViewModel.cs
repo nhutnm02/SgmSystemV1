@@ -122,7 +122,6 @@ namespace Model.ViewModel
 
         [Required]
         [StringLength(20)]
-        [DataType(DataType.Password)]
         public string UserPass { get; set; }
 
         [StringLength(200)]

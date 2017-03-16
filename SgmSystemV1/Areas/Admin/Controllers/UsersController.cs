@@ -74,7 +74,6 @@ namespace SgmSystemV1.Areas.Admin.Controllers
             try
             {
                 var model = userDAL.SelectUserByID(userEditViewModel.UserID);
-                userEditViewModel.UserPass = model.UserPass;
                 if(model == null)
                 {
                     return HttpNotFound();
