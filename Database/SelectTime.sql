@@ -1,0 +1,1 @@
+select us.UserFullName, at.AtNote, CONVERT(date,at.AtDateCheckIn) as N'Ngày', CONVERT(time(7),at.AtTime) as N'Time' from tbl_Attandance at inner join tbl_Users us on at.UserID = us.UserID where CONVERT(time(7),AtTime) > '08:30:00' and UeID = 1

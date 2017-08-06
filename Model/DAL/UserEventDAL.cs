@@ -67,15 +67,27 @@ namespace Model.DAL
             var result = 0;
             try
             {
-                using (TransactionScope scope = new TransactionScope())
+                if(userEventModel.UeCount == 2)
                 {
-                    result = db.Database.ExecuteSqlCommand("exec proc_as_AcceptUpdateAttanceDanceForUser @UserID, @UeType, @UeID",
-                   new SqlParameter("@UserID", userEventModel.UserID),
-                   new SqlParameter("@UeType", userEventModel.UeCount),
-                   new SqlParameter("@UeID", userEventModel.UeID));
-                    scope.Complete();
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        result = db.Database.ExecuteSqlCommand("exec proc_as_AcceptNghiPhep @UserID, @UeID",
+                       new SqlParameter("@UserID", userEventModel.UserID),
+                       new SqlParameter("@UeID", userEventModel.UeID));
+                        scope.Complete();
+                    }
                 }
-
+                else
+                {
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        result = db.Database.ExecuteSqlCommand("exec proc_as_AcceptUpdateAttanceDanceForUser @UserID, @UeType, @UeID",
+                       new SqlParameter("@UserID", userEventModel.UserID),
+                       new SqlParameter("@UeType", userEventModel.UeCount),
+                       new SqlParameter("@UeID", userEventModel.UeID));
+                        scope.Complete();
+                    }
+                }             
                
             }
             catch (Exception ex)
