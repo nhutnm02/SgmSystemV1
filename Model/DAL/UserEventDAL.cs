@@ -56,6 +56,7 @@ namespace Model.DAL
                 ueModel.UeID = item.UeID;
                 ueModel.UeCount = item.UeCount;
                 liHomeView.Add(ueModel);
+                //Edit 0608
             }
 
 
